@@ -104,4 +104,12 @@ class Article extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public function saveImage($filename){
+
+        $this->image = $filename;
+
+        return $this->save(false);
+
+    }
 }
