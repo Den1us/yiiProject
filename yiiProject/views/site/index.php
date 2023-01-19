@@ -1,53 +1,101 @@
 <?php
-
-/** @var yii\web\View $this */
-
-$this->title = 'My Yii Application';
+$this->title = 'Car blog';
 ?>
+<div class="input-group mb-3">
+<input type="text" class="form-control" placeholder="Search Article" id="search-input" aria-label="Search Article" aria-describedby="basic-addon2">
+<div class="input-group-append">
+    <button class="btn btn-outline-secondary" id="search" type="button">Search</button>
+</div>
+</div>
+
 <div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+    <div class="article">
+        <div class="article-list">
+            <div class="article-title-list list-group">
+                <?php foreach ($articles as $article) { ?>
+                        <div class="at-list">
+                            <img class="card-img-top" src="/uploads/<?= $article->img ?>" alt="Card image cap">
+                            <div class="article-list-item list-group-item list-group-item-action"
+                                 data-id="<?= $article->id ?>"><?= $article->title ?></div>
+                        </div>
+                <?php } ?>
             </div>
         </div>
+        <div class="article-container">
+            <div class="article-body">
+                <?php if (!empty($article)) { ?>
+                    <div class="card">
+                        <input id="edit-comment-article-id" type="hidden" value="<?= $articles[0]->id ?>">
+                        <img class="card-img-top" src="/uploads/<?= $articles[0]->img ?>" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title"> <?= $articles[0]->title ?>  <span class="badge badge-info">  <?= $articles[0]->created ?></</span></h5>
+                            <p class="card-text"> <?= $articles[0]->text ?></p>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+            <div class="comment-body">
+                <ul class="list-group">
+                    <?php foreach ($comments as $comment) { ?>
+                    <li class="list-group-item">
+                        <div class="comment-list-item" comment-id="<?= $comment->id ?>"><span class="badge badge-pill badge-warning">-></span><?= $comment->text ?></div>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div class="add-comment-container">
+                <h4>Add Comment</h4>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"></span>
+                    </div>
+                    <textarea id="edit-comment-text" class="form-control" aria-label="With textarea"></textarea>
+                </div>
+                <div class="input-group">
+                    <button type="button" class="btn btn-primary" id="save-comment">
+                        Add Comment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create article</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="add-article">
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" name="Article[imageFile]" for="inputGroupFile01">Choose
+                                image</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="edit-article-title" type="text" class="form-control" placeholder="Title"
+                               aria-label="Title" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <textarea id="edit-article-text" class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-article">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>

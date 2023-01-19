@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Article;
+use app\models\Comment;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -19,7 +21,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -30,7 +32,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -61,7 +63,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $article = Article::find()
+            ->all();
+        $comments = !empty($article) ?  Comment::find()
+            ->where(['article_id' => $article[0]->id])
+            ->all() : [];
+        return $this->render('index',[ 'articles' =>  $article, 'comments' => $comments, 'model' => new Article()]);
     }
 
     /**

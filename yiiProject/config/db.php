@@ -2,10 +2,10 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yiiproject',
+    'dsn' => 'mysql:host=127.0.0.1;dbname=sumdu',
     'username' => 'root',
-    'password' => '',
-    'charset' => 'utf8',
+    'password' => 'root',
+    'charset' => 'utf8mb4',
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,

@@ -82,3 +82,33 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.article {
+    display: flex;
+}
+
+.article-list {
+   flex-direction: column;
+    min-width: 30%;
+}
+.article-body {
+    min-width: 70%;
+}
+.article-container {
+    flex-direction: column;
+    flex-grow: 1;
+}
+.input-group,
+.comment-body {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.add-comment-container {
+    padding: 10px;
+    border: 1px solid #0c5460 ;
+}
+.at-list {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
